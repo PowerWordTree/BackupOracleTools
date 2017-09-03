@@ -1,27 +1,27 @@
-# éœ€è¦è®¾ç½®â€œå¤‡ä»½ä¿ç•™ç­–ç•¥â€ï¼Œ æ¨èâ€œæ¢å¤çª—å£çš„ä¿ç•™ç­–ç•¥â€
+# ĞèÒªÉèÖÃ¡°±¸·İ±£Áô²ßÂÔ¡±£¬ ÍÆ¼ö¡°»Ö¸´´°¿ÚµÄ±£Áô²ßÂÔ¡±
 configure retention policy to recovery window of 7 days;
-# è®¾ç½®å¤‡ä»½åˆ†ç‰‡
+# ÉèÖÃ±¸·İ·ÖÆ¬
 configure channel device type disk maxpiecesize 10G;
-# è®¾ç½®å¹¶è¡Œé€šé“
+# ÉèÖÃ²¢ĞĞÍ¨µÀ
 configure device type disk parallelism 1;
 
 ======================================================
 
-#è®¾ç½®å½’æ¡£æ¨¡å¼
+#ÉèÖÃ¹éµµÄ£Ê½
 shutdown immediate;
 startup mount;
 alter database archivelog;
 alter database open;
 
-# æŸ¥çœ‹å½’æ¡£æ—¥å¿—è®¾ç½®
+# ²é¿´¹éµµÈÕÖ¾ÉèÖÃ
 archive log list;
-# æŸ¥çœ‹é—ªå›è·¯å¾„
+# ²é¿´ÉÁ»ØÂ·¾¶
 show parameter db_recover;
-# æŸ¥çœ‹é—ªå›ä½¿ç”¨æƒ…å†µ
+# ²é¿´ÉÁ»ØÊ¹ÓÃÇé¿ö
 select name,SPACE_LIMIT,SPACE_USED from v$recovery_file_dest;
-# è®¾ç½®é—ªå›åŒºä¸Šé™
+# ÉèÖÃÉÁ»ØÇøÉÏÏŞ
 alter system set db_recovery_file_dest_size=5G;
-# æ›´æ”¹å½’æ¡£æ—¥å¿—ä½ç½®
+# ¸ü¸Ä¹éµµÈÕÖ¾Î»ÖÃ
 alter system set log_archive_dest_1='location=D:\arch';
-# åˆ‡æ¢æ—¥å¿—æ–‡ä»¶
+# ÇĞ»»ÈÕÖ¾ÎÄ¼ş
 alter system switch logfile;
