@@ -1,12 +1,13 @@
 ::Oracle备份脚本
 ::@author FB
-::@version 1.06
+::@version 1.08
 
 @ECHO OFF
 SETLOCAL ENABLEDELAYEDEXPANSION
 SET "RETURN=0"
 
 ::读取配置文件
+FOR %%I IN ("BACKUP_PATH","REMOTE_PATH","BACKUP_DB") DO SET "%%I="
 FOR /F "eol=# tokens=1,* delims== usebackq" %%I IN ("%~dpn0.cfg") DO (
   CALL :TRIM "%%I" "VARNAME"
   CALL :TRIM "%%J" "VARDATA"
