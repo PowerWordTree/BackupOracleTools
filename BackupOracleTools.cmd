@@ -52,6 +52,7 @@ SET "DEST_PATH=%BACKUP_PATH%\%BACKUP_OP%_%BACKUP_DATE%"
 IF EXIST "%DEST_PATH%" (
   ECHO.
   ECHO 今天已经执行过!
+  SET "RETURN=1"
   GOTO :END
 )
 ::创建目标目录
