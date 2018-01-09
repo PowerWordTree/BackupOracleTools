@@ -1,6 +1,6 @@
 ::Oracle备份脚本
 ::@author FB
-::@version 1.08
+::@version 1.09
 
 @ECHO OFF
 SETLOCAL ENABLEDELAYEDEXPANSION
@@ -62,7 +62,7 @@ CALL :ECHO_DATETIME "========== 开始备份 " " ==========" >"%DEST_PATH%\RUN.LOG"
 ::生成备份脚本
 CALL :ECHO_HEAD >"%DEST_PATH%\BACKUP.RMAN"
 CALL :ECHO_SHOW >>"%DEST_PATH%\BACKUP.RMAN"
-CALL :ECHO_BACKUP_%BACKUP_OP% "%DEST_PATH%" >>"%DEST_PATH%\BACKUP.RMAN"
+CALL :ECHO_BACKUP_%BACKUP_OP% "%DEST_PATH%" "%COMPRESS%">>"%DEST_PATH%\BACKUP.RMAN"
 CALL :ECHO_FOOT >>"%DEST_PATH%\BACKUP.RMAN"
 ::执行备份
 RMAN target="%BACKUP_DB%" CMDFILE="%DEST_PATH%\BACKUP.RMAN" LOG="%DEST_PATH%\RUN.LOG" APPEND
@@ -243,9 +243,15 @@ GOTO :EOF
 
 ::备份全库
 ::  参数1: 备份路径
+::  参数2: 是否压缩
 :ECHO_BACKUP_DATABASE
 @ECHO   #备份全库
-@ECHO   backup 
+@ECHO.
+IF /I "_%~2" == "_TRUE" (
+  @ECHO   backup as compressed backupset
+) ELSE (
+  @ECHO   backup
+)
 @ECHO     database tag='DATABASE'
 @ECHO     format '%~1\BACKUP-%%U';
 @ECHO.
@@ -253,9 +259,15 @@ GOTO :EOF
 
 ::备份归档日志
 ::  参数1: 备份路径
+::  参数2: 是否压缩
 :ECHO_BACKUP_ARCHIVELOG
 @ECHO   #备份归档日志
-@ECHO   backup 
+@ECHO.
+IF /I "_%~2" == "_TRUE" (
+  @ECHO   backup as compressed backupset
+) ELSE (
+  @ECHO   backup
+)
 @ECHO     archivelog all tag='ARCHIVELOG'
 @ECHO     format '%~1\BACKUP-%%U'
 @ECHO     delete input;
