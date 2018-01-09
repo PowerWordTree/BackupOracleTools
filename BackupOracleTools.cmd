@@ -137,7 +137,7 @@ IF "_%RETURN%" == "_1" (
 ::同步到远程存储
 IF EXIST "%REMOTE_PATH%" (
   CALL :SLEEP 30
-  ROBOCOPY "%BACKUP_PATH%" "%REMOTE_PATH%" /MIR
+  ROBOCOPY "%BACKUP_PATH%" "%REMOTE_PATH%" /MIR /R:10
 ) 
 GOTO :END
 
@@ -246,7 +246,6 @@ GOTO :EOF
 ::  参数2: 是否压缩
 :ECHO_BACKUP_DATABASE
 @ECHO   #备份全库
-@ECHO.
 IF /I "_%~2" == "_TRUE" (
   @ECHO   backup as compressed backupset
 ) ELSE (
@@ -262,7 +261,6 @@ IF /I "_%~2" == "_TRUE" (
 ::  参数2: 是否压缩
 :ECHO_BACKUP_ARCHIVELOG
 @ECHO   #备份归档日志
-@ECHO.
 IF /I "_%~2" == "_TRUE" (
   @ECHO   backup as compressed backupset
 ) ELSE (
