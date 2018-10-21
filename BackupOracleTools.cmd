@@ -239,7 +239,7 @@ GOTO :EOF
 ::  参数2: 是否压缩
 :ECHO_BACKUP_DATABASE
 @ECHO   #备份全库
-IF /I "_%~2" == "_TRUE" (
+@IF /I "_%~2" == "_TRUE" (
   @ECHO   backup as compressed backupset
 ) ELSE (
   @ECHO   backup
@@ -254,7 +254,7 @@ IF /I "_%~2" == "_TRUE" (
 ::  参数2: 是否压缩
 :ECHO_BACKUP_ARCHIVELOG
 @ECHO   #备份归档日志
-IF /I "_%~2" == "_TRUE" (
+@IF /I "_%~2" == "_TRUE" (
   @ECHO   backup as compressed backupset
 ) ELSE (
   @ECHO   backup
