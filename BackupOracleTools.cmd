@@ -1,6 +1,6 @@
 ::Oracle备份脚本
 ::@author FB
-::@version 1.10
+::@version 1.12
 
 @ECHO OFF
 SETLOCAL ENABLEDELAYEDEXPANSION
@@ -36,8 +36,10 @@ ECHO ================================================
 ECHO.
 ECHO CMD: %~0 ^<操作^>
 ECHO.
-ECHO DATABASE                备份全库
+ECHO DATABASE                备份数据库
 ECHO ARCHIVELOG              备份归档日志
+ECHO CONTROLFILE             备份控制文件
+ECHO SPFILE                  备份参数文件
 ECHO.
 SET "RETURN=1"
 GOTO :END
@@ -134,6 +136,8 @@ IF "_%RETURN%" == "_1" (
   ECHO.
   ECHO.
 )
+::执行结束
+GOTO :EOF
 
 ::生成当前时间
 ::  参数1: 前缀文字
@@ -233,19 +237,18 @@ GOTO :EOF
 @ECHO.
 @GOTO :EOF
 
-
-::备份全库
+::备份数据库
 ::  参数1: 备份路径
 ::  参数2: 是否压缩
 :ECHO_BACKUP_DATABASE
-@ECHO   #备份全库
+@ECHO   #备份数据库
 @IF /I "_%~2" == "_TRUE" (
   @ECHO   backup as compressed backupset
 ) ELSE (
   @ECHO   backup
 )
-@ECHO     database tag='DATABASE'
-@ECHO     format '%~1\BACKUP-%%U';
+@ECHO     database tag='Database'
+@ECHO     format '%~1\BACKUP-Database-%%U';
 @ECHO.
 @GOTO :EOF
 
@@ -259,9 +262,40 @@ GOTO :EOF
 ) ELSE (
   @ECHO   backup
 )
-@ECHO     archivelog all tag='ARCHIVELOG'
-@ECHO     format '%~1\BACKUP-%%U'
+@ECHO     archivelog all tag='ArchiveLog'
+@ECHO     format '%~1\BACKUP-ArchiveLog-%%U'
+@ECHO     include current controlfile
 @ECHO     delete input;
+@ECHO.
+@GOTO :EOF
+
+::备份控制文件
+::  参数1: 备份路径
+::  参数2: 是否压缩
+:ECHO_BACKUP_CONTROLFILE
+@ECHO   #备份控制文件
+@IF /I "_%~2" == "_TRUE" (
+  @ECHO   backup as compressed backupset
+) ELSE (
+  @ECHO   backup
+)
+@ECHO     current controlfile tag='ControlFile'
+@ECHO     format '%~1\BACKUP-ControlFile-%%U';
+@ECHO.
+@GOTO :EOF
+
+::备份参数文件
+::  参数1: 备份路径
+::  参数2: 是否压缩
+:ECHO_BACKUP_SPFILE
+@ECHO   #备份参数文件
+@IF /I "_%~2" == "_TRUE" (
+  @ECHO   backup as compressed backupset
+) ELSE (
+  @ECHO   backup
+)
+@ECHO     spfile tag='SPFile'
+@ECHO     format '%~1\BACKUP-SPFile-%%U';
 @ECHO.
 @GOTO :EOF
 

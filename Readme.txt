@@ -1,10 +1,23 @@
+需先配置BackupOracleTools.cfg文件
+
+参数:
+    DATABASE: 备份数据库
+    ARCHIVELOG: 备份归档日志
+    CONTROLFILE: 备份控制文件
+    SPFILE: 备份参数文件
+
+备份归档日: 备份全部，自动删除，包含Control File。
+
+======================================================
+
 # 需要设置“备份保留策略”， 推荐“恢复窗口的保留策略”
 configure retention policy to recovery window of 7 days;
 # 设置备份分片
 configure channel device type disk maxpiecesize 10G;
 # 设置并行通道
 configure device type disk parallelism 1;
-
+# 推荐不使用自动备份控制文件
+CONFIGURE CONTROLFILE AUTOBACKUP OFF
 ======================================================
 
 #设置归档模式
@@ -25,3 +38,8 @@ alter system set db_recovery_file_dest_size=5G;
 alter system set log_archive_dest_1='location=D:\arch';
 # 切换日志文件
 alter system switch logfile;
+======================================================
+
+restore database;
+recover database;
+alter database open resetlogs;
