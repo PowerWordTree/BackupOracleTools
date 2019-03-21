@@ -14,8 +14,6 @@ configure retention policy to recovery window of 7 days;
 configure channel device type disk maxpiecesize 10G;
 # 设置并行通道
 configure device type disk parallelism 1;
-# 推荐不使用自动备份控制文件
-CONFIGURE CONTROLFILE AUTOBACKUP OFF
 ======================================================
 
 #设置归档模式

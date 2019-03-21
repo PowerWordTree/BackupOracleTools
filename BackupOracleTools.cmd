@@ -248,7 +248,8 @@ GOTO :EOF
   @ECHO   backup
 )
 @ECHO     database tag='Database'
-@ECHO     format '%~1\BACKUP-Database-%%U';
+@ECHO     format '%~1\BACKUP-Database-%%U'
+@ECHO     include current controlfile;
 @ECHO.
 @GOTO :EOF
 
