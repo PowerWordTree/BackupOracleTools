@@ -264,7 +264,6 @@ GOTO :EOF
 )
 @ECHO     archivelog all tag='ArchiveLog'
 @ECHO     format '%~1\BACKUP-ArchiveLog-%%U'
-@ECHO     include current controlfile
 @ECHO     delete input;
 @ECHO.
 @GOTO :EOF
