@@ -9,11 +9,13 @@
 ======================================================
 
 # 需要设置“备份保留策略”， 推荐“恢复窗口的保留策略”
-configure retention policy to recovery window of 7 days;
+CONFIGURE RETENTION POLICY TO RECOVERY WINDOW OF 7 DAYS;
 # 设置备份分片
-configure channel device type disk maxpiecesize 10G;
+CONFIGURE CHANNEL DEVICE TYPE DISK MAXPIECESIZE 10G;
 # 设置并行通道
-configure device type disk parallelism 1;
+CONFIGURE DEVICE TYPE DISK PARALLELISM 1;
+# 设置压缩模式
+CONFIGURE COMPRESSION ALGORITHM 'LOW';
 ======================================================
 
 #设置归档模式

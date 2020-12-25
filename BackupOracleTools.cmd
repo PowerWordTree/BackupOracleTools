@@ -1,6 +1,6 @@
 ::Oracle备份脚本
 ::@author FB
-::@version 1.12
+::@version 1.13
 
 @ECHO OFF
 SETLOCAL ENABLEDELAYEDEXPANSION
@@ -26,8 +26,10 @@ IF NOT EXIST "%BACKUP_PATH%" (
 )
 
 ::检查参数
-IF /I "_%~1" == "_DATABASE"   (SET "BACKUP_OP=DATABASE" & GOTO :START)
-IF /I "_%~1" == "_ARCHIVELOG" (SET "BACKUP_OP=ARCHIVELOG" & GOTO :START)
+IF /I "_%~1" == "_DATABASE"    (SET "BACKUP_OP=DATABASE"    & GOTO :START)
+IF /I "_%~1" == "_ARCHIVELOG"  (SET "BACKUP_OP=ARCHIVELOG"  & GOTO :START)
+IF /I "_%~1" == "_CONTROLFILE" (SET "BACKUP_OP=CONTROLFILE" & GOTO :START)
+IF /I "_%~1" == "_SPFILE"      (SET "BACKUP_OP=SPFILE"      & GOTO :START)
 ::参数错误
 ECHO.
 ECHO ================================================
@@ -137,7 +139,7 @@ IF "_%RETURN%" == "_1" (
   ECHO.
 )
 ::执行结束
-GOTO :EOF
+GOTO :END
 
 ::生成当前时间
 ::  参数1: 前缀文字
